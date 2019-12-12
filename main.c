@@ -5,7 +5,7 @@ int spawnThread(memHandler *mh, int blocks, int blockSize, int threadID);
 //void grabStartTime();
 //void grabEndTime();
 
-pthread_t *thread;
+pthread_t *pthreads;
 
 int main(int argc, char **argv)
 {
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     int threads = 1;
 
     //Skapar 'threads antal' trådar, thread blir då en array av threads.
-    thread = malloc(sizeof(pthread_t) * threads);
+    pthreads = malloc(sizeof(pthread_t) * threads);
 
     int totalMemorySize = blocks * blockSize;
     memoryHandler = ma_init(totalMemorySize);
@@ -35,8 +35,6 @@ int main(int argc, char **argv)
         if (spawnThread(memoryHandler, blocks, blockSize, i) == 0)
         {
             fprintf(stderr, "Unable to launch thread %d.", i);
-
-            /* Deal with it */
         }
     }
     return (0);
@@ -44,6 +42,6 @@ int main(int argc, char **argv)
 
 int spawnThread(memHandler *mh, int blocks, int blockSize, int threadID)
 {
-    pthread_create(&thread[threadID], NULL, );
+    //pthread_create(&thread[threadID], NULL, );
     return (-1);
 }
