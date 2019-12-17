@@ -10,7 +10,7 @@ pthread_t *pthreads;
 int main(int argc, char **argv)
 {
     memHandler *memoryHandler;
-    srand((unsigned int)time(NULL));
+    //srand((unsigned int)time(NULL));
     //int blocks=atoi(argv[1]);
     //int blockSize=atoi(argv[2]);
     //int threads=atoi(argv[3]);

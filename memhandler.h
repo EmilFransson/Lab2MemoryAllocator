@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #define major_version 0
 #define minor_version 1
 
@@ -33,6 +34,9 @@ You are free add additional enties, but not remove.
 */
 typedef struct {
     int allocatedSize;
+    int nrOfMemoryBlobsPointedTo;
+    char** blobArray; 
+    int* bytesInAGivenArray;
     void *basePointer;
     struct listItem *first;
     int allocatedItems;  
