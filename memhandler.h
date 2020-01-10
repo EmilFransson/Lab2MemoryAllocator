@@ -8,7 +8,6 @@
 #include <string.h>
 #define major_version 0
 #define minor_version 1
-
 /* Entry for an memory allocation. 
 Tracks starting address, size and end address.
 Use THID to identify the thread that allocated the memory, and use
@@ -27,7 +26,8 @@ struct listItem{
     int allocationSize;
     void *startingAddress;
     void *endAddress;
-    struct listItem *next;
+    struct listItem* next;
+    struct listItem* previous;
 };
 
 /* handler where lib stores intermediate data
@@ -56,8 +56,7 @@ uint64_t ma_getIdentifier(memHandler *myHandler);
 /* From the allocated memory, assign <memSize> to thread with id <THID> and 
 customer <IDENT>. Return pointer to assigned memory. If not available, 
 return 0. */
-char *ma_allocate(memHandler *myHandler,int memSize,uint64_t IDENT, pthread_t 
-THID);
+char *ma_allocate(memHandler *myHandler,int memSize,uint64_t IDENT, pthread_t THID);
 
 /* Release the memory allocated to thread id <THID> and customer <IDENT>, 
 return 0 on success, -1 on fail. */
@@ -69,8 +68,7 @@ ved to a new location. On success, return a pointer to the memory location, and
 set the memory size associated with <THID> and <IDENT> in the <memSize> variab-
 le. If its not possible to increase the allocation, return the original memory 
 location and set the <memSize> variable to the original size.  */
-char *ma_increase(memHandler *myHandler, int *memSize,uint64_t IDENT, pthread_t 
-THID);
+char *ma_increase(memHandler *myHandler, int *memSize, uint64_t IDENT, pthread_t THID);
 
 /* Return availible memory, return the total amount of unallocated memory 
 (bytes) */
@@ -91,6 +89,16 @@ int ma_showAllocations(memHandler *myHandler, char *OUTPUT);
 
 /* Free all the allocated memory and empty the handler */
 int ma_terminate(memHandler *myHandler);
+
+char* ma_assertSameBlob(memHandler* myHandler, struct listItem* item1, struct listItem* item2);
+
+int ma_returnCurrentBlob(memHandler* myHandler, struct listItem* item);
+
+void ma_reLink(memHandler* myHandler, struct listItem* item);
+
+struct listItem* ma_createItem(memHandler* myHandler, struct listItem* previous, struct listItem* next, int allocationSize, uint64_t IDENT, pthread_t THID, char* startingAddress, char* endAddress);
+
+void ma_clear(char* startAddress, int memorySize);
 
 /* Return version, MAJOR.MINOR, as double */
 double getVersion(void);

@@ -2,14 +2,14 @@
 
 CFLAGS = -Wall -Werror -std=c99 -g
 
-main: main.o memhandler.o
-	gcc main.o memhandler.o -o main 
+testMemHandler: testMemHandler.o
+	gcc -o testMemHandler testMemHandler.o $(CFLAGS) -L. -lmemhandler -pthread -Wl,-rpath=.
 
-main.o: main.c memhandler.c
-	gcc $(CFLAGS) -c main.c memhandler.c 
+testMemHandler.o: testMemHandler.c
+	gcc -c testMemHandler.c $(CFLAGS) -L. -lmemhandler -pthread -Wl,-rpath=. 
 
-memhandler.o: memhandler.c memhandler.h 
-	gcc $(CFLAGS) -c memhandler.c memhandler.h
+test: testMemHandler
+	./testMemHandler $(ARGS) 	
 
 clean:
-	rm -f *.o main
+	rm -f *.o testMemHandler
