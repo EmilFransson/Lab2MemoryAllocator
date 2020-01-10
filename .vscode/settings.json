@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "memhandler.h": "c"
+        "memhandler.h": "c",
+        "stdint.h": "c",
+        "stdio.h": "c"
     }
 }
